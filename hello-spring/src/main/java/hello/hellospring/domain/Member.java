@@ -1,7 +1,14 @@
 package hello.hellospring.domain;
 
+import javax.persistence.*;
+
+@Entity
 public class Member {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+//    @Column(name = "username") //자바의 변수명과 DB의 컬럼명이 다를경우 매핑역할
     private String name;
 
     public Long getId() {
