@@ -11,6 +11,7 @@ import javax.validation.constraints.Size;
 @Data
 public class Board {
     @Id
+    //AUTO_INCREMENT 해놓은 아이디를 설정
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @NotNull
