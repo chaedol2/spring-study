@@ -5,24 +5,26 @@ import com.chs.myhome.model.QUser;
 import com.chs.myhome.model.User;
 import com.chs.myhome.repository.UserRepository;
 import com.querydsl.core.types.Predicate;
-import com.querydsl.core.types.dsl.BooleanExpression;
 import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/api")
 @Slf4j
 class UserApiController {
 
+    private final Logger LOGGER = LoggerFactory.getLogger(UserApiController.class);
+
     @Autowired
     private UserRepository repository;
 
     @GetMapping("/users")
     Iterable<User> all(@RequestParam(required = false) String method, @RequestParam(required = false) String text) {
+        LOGGER.info("all 출력!");
+
         Iterable<User> users = null;
         if ("query".equals(method)) {
             users = repository.findByUsernameQuery(text);
@@ -51,6 +53,8 @@ class UserApiController {
 
     @PostMapping("/users")
     User newUser(@RequestBody User newUser) {
+        LOGGER.info("newUser 출력!");
+
         return repository.save(newUser);
     }
 
@@ -58,12 +62,14 @@ class UserApiController {
 
     @GetMapping("/users/{id}")
     User one(@PathVariable Long id) {
+        LOGGER.info("one 출력!");
 
         return repository.findById(id).orElse(null);
     }
 
     @PutMapping("/users/{id}")
     User replaceUser(@RequestBody User newUser, @PathVariable Long id) {
+        LOGGER.info("replaceUser 출력!");
 
         return repository.findById(id)
                 .map(user -> {
@@ -85,6 +91,8 @@ class UserApiController {
 
     @DeleteMapping("/users/{id}")
     void deleteUser(@PathVariable Long id) {
+        LOGGER.info("deleteUser 출력!");
+
         repository.deleteById(id);
     }
 }

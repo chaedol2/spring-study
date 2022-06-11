@@ -2,7 +2,6 @@ package com.chs.myhome.repository;
 
 import com.chs.myhome.model.QUser;
 import com.chs.myhome.model.User;
-import com.chs.myhome.service.UserService;
 import com.querydsl.jpa.impl.JPAQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;

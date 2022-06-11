@@ -4,6 +4,8 @@ import com.chs.myhome.model.Board;
 import com.chs.myhome.repository.BoardRepository;
 import com.chs.myhome.service.BoardService;
 import com.chs.myhome.validator.BoardValidator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -24,6 +26,8 @@ import java.util.List;
 @RequestMapping("/board")
 public class BoardController {
 
+    private final Logger LOGGER = LoggerFactory.getLogger(BoardController.class);
+
     //boardRepository Defendency Injection 해준다.
     @Autowired
     private BoardRepository boardRepository;
@@ -38,6 +42,7 @@ public class BoardController {
     @GetMapping("/list")
     public String list(Model model, @PageableDefault(size = 2) Pageable pageable,
                        @RequestParam (required = false, defaultValue = "")String searchText){
+        LOGGER.info("list 출력!");
         //위에서 Pageable객체를 생성후 대입해주어도 된다.
 //        Page<Board> boards = boardRepository.findAll(pageable);
 
@@ -63,6 +68,7 @@ public class BoardController {
 
     @GetMapping("/form")
     public String form(Model model, @RequestParam(required = false) Long id){
+        LOGGER.info("form 출력!");
         if(id == null){
             model.addAttribute("board", new Board());
         } else {
@@ -76,6 +82,7 @@ public class BoardController {
     @PostMapping("/form")
     //@Valid 어노테이션을 설정해주고 model Board에 설정한 @Notnull, @Size 어노테이션이 부합하지 않으면 bindingResult.hasErros() 메소드가 호출된다.
     public String postform(@Valid Board board, BindingResult bindingResult, Authentication authentication){
+        LOGGER.info("postform 출력!");
         //보드클래스에 바인딩리절트를 넘겨준다.
         boardValidator.validate(board, bindingResult);
         if (bindingResult.hasErrors()){

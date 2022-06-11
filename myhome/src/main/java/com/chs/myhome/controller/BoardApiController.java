@@ -2,6 +2,8 @@ package com.chs.myhome.controller;
 
 import com.chs.myhome.model.Board;
 import com.chs.myhome.repository.BoardRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.util.StringUtils;
@@ -13,6 +15,8 @@ import java.util.List;
 @RequestMapping("/api")
 class BoardApiController {
 
+    private final Logger LOGGER = LoggerFactory.getLogger(BoardApiController.class);
+
     @Autowired
     private BoardRepository repository;
 
@@ -20,6 +24,7 @@ class BoardApiController {
     //required=false 타이틀이 전달이 되면 타이틀하나출력 타이틀이 전달되지 않으면 전체를 리턴
     List<Board> all(@RequestParam(required=false) String title,
         @RequestParam(required = false, defaultValue = "") String content) {
+        LOGGER.info("all 호출!");
         if(StringUtils.isEmpty(title) && StringUtils.isEmpty(content)){
             //둘다 비어있을경우 전체를 검색
             return repository.findAll();
@@ -35,6 +40,7 @@ class BoardApiController {
     //Content-Type : "application/json"을 꼭 설정해주어야 json타입으로 보낼 수 있다.
     @PostMapping("/boards")
     Board newBoard(@RequestBody Board newBoard) {
+        LOGGER.info("newBoard 호출!");
         return repository.save(newBoard);
     }
 
@@ -42,6 +48,7 @@ class BoardApiController {
 
     @GetMapping("/boards/{id}")
     Board one(@PathVariable Long id) {
+        LOGGER.info("one 호출!");
         //orElse는 옵셔널로 없을경우 Null 지정
         return repository.findById(id).orElse(null);
     }
@@ -51,6 +58,7 @@ class BoardApiController {
     //json타입으로 send한다.
     @PutMapping("/boards/{id}")
     Board replaceBoard(@RequestBody Board newBoard, @PathVariable Long id) {
+        LOGGER.info("replaceBoard 호출!");
 
         return repository.findById(id)
                 .map(board -> {
@@ -67,6 +75,7 @@ class BoardApiController {
     @Secured("ROLE_ADMIN")
     @DeleteMapping("/boards/{id}")
     void deleteBoard(@PathVariable Long id) {
+        LOGGER.info("deleteBoard 호출!");
         repository.deleteById(id);
     }
 }
