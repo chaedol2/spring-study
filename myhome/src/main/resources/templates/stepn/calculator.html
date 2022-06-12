@@ -1,17 +1,10 @@
 <!doctype html>
 <html xmlns:th="http://www.thymeleaf.org">
 
-<head th:replace="fragments/common :: head('스테픈')">
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
-        integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
-    <link href="starter-template.css" th:href="@{/starter-template.css}" rel="stylesheet">
-
-    <title>스테픈</title>
+<head>
+    <div th:replace="fragments/common :: head('스테픈')"></div>
+    <link href="calculator.css" th:href="@{/css/calculator.css}" rel="stylesheet">
+    <title th:text="${title}">Hello!</title>
 </head>
 
 <body>
@@ -19,191 +12,161 @@
     <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top" th:replace="fragments/common :: menu('stepn')">
     </nav>
 
+    <section class="content">
+        <div class="flexbox">
 
-    <div class="container">
-        <div class="loading" style="text-align: center; display: none;">
-            <h4>코인 시세 로딩중</h4>
-            <h5>오래 지속될 경우 새로고침하세요!</h5>
-        </div>
-
-        <div class="contents" style="text-align: center; display: block;">
-            <p id="dateTime">2022-06-11 19:41:50</p>
-            <div>
-                <label class="label-radio" for="radioSol"><span>SOL체인</span></label><input type="radio" id="radioSol"
-                    name="gstType" value="sol" checked="">
-                <label class="label-radio" for="radioBsc"><span>BSC체인</span></label><input type="radio" id="radioBsc"
-                    name="gstType" value="bsc">
+            <p><strong>체인선택</strong></p>
+            <!--체인선택-->
+            <div class="item">
+                <label class="label-radio" for="radioSol"><span>솔라나 체인</span></label><input type="radio" id="radioSol" name="gstType" value="sol" checked="">
+                <label class="label-radio" for="radioBsc"><span>바이낸스 체인</span></label><input type="radio" id="radioBsc" name="gstType" value="bsc">
             </div>
-            <table style="margin-left: auto; margin-right: auto;">
-                <tbody>
+
+            <p><strong>체인시세</strong></p>
+            <!--체인시세-->
+            <div class="item">
+                <table>
+                    <tbody style="">
                     <tr>
                         <th>
-                            <span class="chain-sol" id="chain-name" style="">SOL</span>
+                            <span class="chainMainTitle" id="chainMainTitle">SOL</span>
                         </th>
                         <th>
-                            <span class="chain-sol" style="">GST</span>
+                            <span class="chainGstTitle">GST</span>
                         </th>
+                        <th>
+                            <span class="chainGmtTitle">GMT</span>
+                        </th>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span class="chainMainUsd" id="mainUsd">로딩 중</span>
+                        </td>
+                        <td>
+                            <span class="chainGstUsd" id="gstUsd">로딩 중</span>
+                        </td>
+                        <td>
+                            <span class="chainGmtUsd" id="gmtUsd">로딩 중</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span class="chainMainKrw" id="mainKrw">로딩 중</span>
+                        </td>
+                        <td>
+                            <span class="chainGstKrw" id="gstKrw">로딩 중</span>
+                        </td>
+                        <td>
+                            <span class="chainGmtKrw" id="gmtKrw">로딩 중</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input class="compareMain" type="number" id="compareMain" value="1" oninput="InputChangeMain()">
+                        </td>
+                        <td>
+                            <input class="compareGst" type="number" id="compareGst" oninput="InputChangeGst()">
+                        </td>
+                        <td>
+                            <input class="compareGmt" type="number" id="compareGmt" oninput="InputChangeGmt()">
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <p><strong>민팅계산기</strong></p>
+            <!--민팅테이블-->
+            <div class="item">
+                <table class="mintCompareTable" id="mintCompareTable">
+                    <tbody>
+                    <tr>
+                        <th>구분</th>
+                        <th>내용</th>
+                        <th>GST</th>
                         <th>GMT</th>
                     </tr>
                     <tr>
-                        <td>
-                            <span class="chain-sol" id="sol-usd" style="">로딩 중</span>
-                        </td>
-                        <td>
-                            <span class="chain-sol" id="gst-usd" style="">로딩 중</span>
-                        </td>
-                        <td id="gmt-usd">로딩 중</td>
+                        <th>5레벨링 비용</th>
+                        <td><input type="checkbox" id="isLvlUp" checked="" onclick="MintRatioCalculator()"><label for="isLvlUp">적용여부</label></td>
+                        <td><span id="lvlUpGst">20</span></td>
+                        <td><span id="lvlUpGmt">10</span></td>
                     </tr>
                     <tr>
+                        <th rowspan="2">1회 민팅비용</th>
+                    </tr>
+                    <tr id="sneakers1">
                         <td>
-                            <span class="chain-sol" id="sol-krw" style="">로딩 중</span>
+                            <select id="isCommonUncommon" class="selectType" onchange="MintRatioCalculator()">
+                                <option value="common">커먼&커먼</option>
+                                <option value="uncommon">언커먼&언커먼</option>
+                            </select>
+                            <select id="firstMintCount" onchange="MintRatioCalculator()">
+                                <option value="0">0</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                            </select>
+                            <select id="secondMintCount" onchange="MintRatioCalculator()">
+                                <option value="0">0</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                            </select>
                         </td>
                         <td>
-                            <span class="chain-sol" id="gst-krw" style="">로딩 중</span>
+                            <span id="gstMint">-</span>
                         </td>
-                        <td id="gmt-krw">로딩 중</td>
+                        <td>
+                            <span id="gmtMint">-</span>
+                        </td>
                     </tr>
                     <tr>
-                        <td>
-                            <input class="chain-sol" type="number" id="compareMain" value="1" style=""
-                                oninput="InputChangeMain()">
-                        </td>
-                        <td>
-                            <input class="chain-sol" type="number" id="compareGst" style="" oninput="InputChangeGst()">
-                        </td>
-                        <td><input type="number" id="compareGmt" oninput="InputChangeGmt()"></td>
+                        <th colspan="2">총 민팅 지출비용</th>
+                        <td><span id="totalCostGst">0</span></td>
+                        <td><span id="totalCostGmt">0</span></td>
                     </tr>
-                </tbody>
-            </table>
-        </div>
+                    <tr>
+                        <th colspan="2">총 민팅 지출비용(KRW)</th>
+                        <th colspan="2"><span id="totalMintCostKrw">0</span>원</th>
+                    </tr>
+                    <tr>
+                        <th colspan="2">신발 바닥가(SOL or BNB)</th>
+                        <td colspan="2">
+                            <input type="number" id="floorPrice" value="3" step="0.1" oninput="MintRatioCalculator()"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>판매 수수료(KRW)</th>
+                        <th>6%</th>
+                        <td colspan="2"><span id="salesCostKrw">0</span>원</td>
+                    </tr>
+                    <tr>
+                        <th colspan="2">총 이익비용(KRW)</th>
+                        <th colspan="2"><span id="totalProfitKrw">0</span>원</th>
+                    </tr>
+                    <tr>
+                        <th colspan="2">총 손익비용(KRW)</th>
+                        <th colspan="2"><span id="profitKrw">0</span>원</th>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
 
-    </div>
 
+
+        </div><!--flexBox-->
+    </section><!--content-->
 
     <footer th:replace="fragments/common :: footer"></footer>
-    <script>
-        let coinPrice=[]; //전역변수 선언
-        let gst;
-        let gmt;
-        let main;
 
-        //솔라나체인 코인가격 불러오기
-        function fetchCoinPriceSol() {
-
-            $.ajax({
-                type: 'GET',
-                url: 'https://api.coingecko.com/api/v3/simple/price?ids=green-satoshi-token%2Csolana%2Cstepn&vs_currencies=krw%2Cusd',
-                dataType: 'json',
-                async: false,
-                success: function (data) {
-                    let solUsd = data.solana.usd;
-                    let solKrw = data.solana.krw;
-                    let solGstUsd = data['green-satoshi-token'].usd;
-                    let solGstKrw = data['green-satoshi-token'].krw;
-                    let solGmtUsd = data.stepn.usd;
-                    let solGmtKrw = data.stepn.krw
-                    $('#sol-usd').text(solUsd + '$');
-                    $('#sol-krw').text(solKrw + '원');
-                    $('#gst-usd').text(solGstUsd + '$');
-                    $('#gst-krw').text(solGstKrw + '원');
-                    $('#gmt-usd').text(solGmtUsd + '$');
-                    $('#gmt-krw').text(solGmtKrw + '원');
-                    $('#chain-name').text("SOL");
-                    coinPrice.splice(0, 5, solUsd,
-                                           solKrw,
-                                           solGstUsd,
-                                           solGstKrw,
-                                           solGmtUsd,
-                                           solGmtKrw);
-                },
-                error: function () {
-                    alert("ajax error");
-                }
-            });
-        }
-
-        //바이낸스체인 코인가격 불러오기
-        function fetchCoinPriceBsc() {
-            $.ajax({
-                url: 'https://api.coingecko.com/api/v3/simple/price?ids=green-satoshi-token-bsc%2Cbinancecoin%2Cstepn&vs_currencies=krw%2Cusd',
-                type: 'GET',
-                async: false,
-                success: function (data) {
-                    let solUsd = data.binancecoin.usd;
-                    let solKrw = data.binancecoin.krw;
-                    let solGstUsd = data['green-satoshi-token-bsc'].usd;
-                    let solGstKrw = data['green-satoshi-token-bsc'].krw;
-                    let solGmtUsd = data.stepn.usd;
-                    let solGmtKrw = data.stepn.krw
-                    $('#sol-usd').text(solUsd + '$');
-                    $('#sol-krw').text(solKrw + '원');
-                    $('#gst-usd').text(solGstUsd + '$');
-                    $('#gst-krw').text(solGstKrw + '원');
-                    $('#gmt-usd').text(solGmtUsd + '$');
-                    $('#gmt-krw').text(solGmtKrw + '원');
-                    $('#chain-name').text("BNB");
-                    coinPrice.splice(0, 5, solUsd,
-                                           solKrw,
-                                           solGstUsd,
-                                           solGstKrw,
-                                           solGmtUsd,
-                                           solGmtKrw);
-                },
-                error: function () {
-                    alert("ajax error");
-                }
-            });
-        }
-
-        //input값 변경 이벤트 발생시 비율 계산
-        function InputChangeMain() {
-            let compareMain = parseFloat(document.getElementById("compareMain").value);
-            gst = coinPrice[0] * compareMain / coinPrice[2];
-            gmt = coinPrice[0] * compareMain / coinPrice[4];
-
-            document.getElementById("compareGst").value = gst.toFixed(2);
-            document.getElementById("compareGmt").value = gmt.toFixed(2);
-        }
-
-        function InputChangeGst() {
-            gst = parseFloat(document.getElementById("compareGst").value);
-            main = coinPrice[2] * gst / coinPrice[0];
-            gmt = coinPrice[2] * gst / coinPrice[4];
-
-            document.getElementById("compareMain").value = main.toFixed(2);
-            document.getElementById("compareGmt").value = gmt.toFixed(2);
-        }
-
-        function InputChangeGmt() {
-            gmt = parseFloat(document.getElementById("compareGmt").value);
-            main = coinPrice[4] * gmt / coinPrice[0];
-            gst = coinPrice[4] * gmt / coinPrice[2];
-
-            document.getElementById("compareMain").value = main.toFixed(2);
-            document.getElementById("compareGst").value = gst.toFixed(2);
-        }
-
-        //페이지 실행시 실행
-        $(function (){
-            fetchCoinPriceSol();
-        });
-
-        // 라디오버튼 클릭시 이벤트 발생
-        $("input:radio[name=gstType]").click(function () {
-            if ($("input[name=gstType]:checked").val() == "sol") {
-                fetchCoinPriceSol()
-                document.getElementById("compareMain").value = 1;
-            } else if ($("input[name=gstType]:checked").val() == "bsc") {
-                fetchCoinPriceBsc()
-                document.getElementById("compareMain").value = 1;
-            }
-        });
-
-
-
-
-    </script>
-
+    <script type="text/javascript" th:inline="javascript" th:src="@{/js/calculator.js}"></script>
 </body>
 
 </html>
