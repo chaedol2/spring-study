@@ -34,11 +34,11 @@
                 let solGmtUsd = data.stepn.usd;
                 let solGmtKrw = data.stepn.krw
                 $('#mainUsd').text(solUsd + '$');
-                $('#mainKrw').text(solKrw + '원');
+                $('#mainKrw').text((solKrw).toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",") + '원');
                 $('#gstUsd').text(solGstUsd + '$');
-                $('#gstKrw').text(solGstKrw + '원');
+                $('#gstKrw').text((solGstKrw).toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",") + '원');
                 $('#gmtUsd').text(solGmtUsd + '$');
-                $('#gmtKrw').text(solGmtKrw + '원');
+                $('#gmtKrw').text((solGmtKrw).toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",") + '원');
                 $('#chainMainTitle').text("SOL");
                 coinPrice.splice(0, 5, solUsd,
                                        solKrw,
@@ -67,11 +67,11 @@
                 let solGmtUsd = data.stepn.usd;
                 let solGmtKrw = data.stepn.krw
                 $('#mainUsd').text(solUsd + '$');
-                $('#mainKrw').text(solKrw + '원');
+                $('#mainKrw').text((solKrw).toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",") + '원');
                 $('#gstUsd').text(solGstUsd + '$');
-                $('#gstKrw').text(solGstKrw + '원');
+                $('#gstKrw').text((solGstKrw).toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",") + '원');
                 $('#gmtUsd').text(solGmtUsd + '$');
-                $('#gmtKrw').text(solGmtKrw + '원');
+                $('#gmtKrw').text((solGmtKrw).toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",") + '원');
                 $('#chainMainTitle').text("BNB");
                 coinPrice.splice(0, 5, solUsd,
                                        solKrw,
@@ -193,16 +193,16 @@
 
         //총 민팅 지출비용 KRW환산
         totalMintCostKrw = gstMint * coinPrice[3] + gmtMint * coinPrice[5];
-        document.getElementById('totalMintCostKrw').innerText = totalMintCostKrw.toFixed(0);
+        document.getElementById('totalMintCostKrw').innerText = (totalMintCostKrw.toFixed(0)).toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
 
         //신발 바닥가(SOL) & 판매수수료(KRW) & 최소 이익비용(KRW) & 총 손익비용(KRW)
         floorPrice = document.getElementById('floorPrice').value;
         salesCostKrw = floorPrice * 0.06 * coinPrice[1];
-        document.getElementById('salesCostKrw').innerText = salesCostKrw.toFixed(0);
+        document.getElementById('salesCostKrw').innerText = (salesCostKrw.toFixed(0)).toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
 
         totalProfitKrw = floorPrice * 0.94 * coinPrice[1];
-        document.getElementById('totalProfitKrw').innerText = totalProfitKrw.toFixed(0);
+        document.getElementById('totalProfitKrw').innerText = (totalProfitKrw.toFixed(0)).toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
 
         profitKrw = totalProfitKrw - totalMintCostKrw;
-        document.getElementById('profitKrw').innerText = profitKrw.toFixed(0);
+        document.getElementById('profitKrw').innerText = (profitKrw.toFixed(0)).toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
     }

@@ -26,7 +26,7 @@
             <!--체인시세-->
             <div class="item">
                 <table>
-                    <tbody style="">
+                    <tbody>
                     <tr>
                         <th>
                             <span class="chainMainTitle" id="chainMainTitle">SOL</span>
@@ -80,81 +80,81 @@
             <div class="item">
                 <table class="mintCompareTable" id="mintCompareTable">
                     <tbody>
-                    <tr>
-                        <th>구분</th>
-                        <th>내용</th>
-                        <th>GST</th>
-                        <th>GMT</th>
-                    </tr>
-                    <tr>
-                        <th>5레벨링 비용</th>
-                        <td><input type="checkbox" id="isLvlUp" checked="" onclick="MintRatioCalculator()"><label for="isLvlUp">적용여부</label></td>
-                        <td><span id="lvlUpGst">20</span></td>
-                        <td><span id="lvlUpGmt">10</span></td>
-                    </tr>
-                    <tr>
-                        <th rowspan="2">1회 민팅비용</th>
-                    </tr>
-                    <tr id="sneakers1">
-                        <td>
-                            <select id="isCommonUncommon" class="selectType" onchange="MintRatioCalculator()">
-                                <option value="common">커먼&커먼</option>
-                                <option value="uncommon">언커먼&언커먼</option>
-                            </select>
-                            <select id="firstMintCount" onchange="MintRatioCalculator()">
-                                <option value="0">0</option>
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                                <option value="3">3</option>
-                                <option value="4">4</option>
-                                <option value="5">5</option>
-                                <option value="6">6</option>
-                            </select>
-                            <select id="secondMintCount" onchange="MintRatioCalculator()">
-                                <option value="0">0</option>
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                                <option value="3">3</option>
-                                <option value="4">4</option>
-                                <option value="5">5</option>
-                                <option value="6">6</option>
-                            </select>
-                        </td>
-                        <td>
-                            <span id="gstMint">-</span>
-                        </td>
-                        <td>
-                            <span id="gmtMint">-</span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th colspan="2">총 민팅 지출비용</th>
-                        <td><span id="totalCostGst">0</span></td>
-                        <td><span id="totalCostGmt">0</span></td>
-                    </tr>
-                    <tr>
-                        <th colspan="2">총 민팅 지출비용(KRW)</th>
-                        <th colspan="2"><span id="totalMintCostKrw">0</span>원</th>
-                    </tr>
-                    <tr>
-                        <th colspan="2">신발 바닥가(SOL or BNB)</th>
-                        <td colspan="2">
-                            <input type="number" id="floorPrice" value="3" step="0.1" oninput="MintRatioCalculator()"/>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>판매 수수료(KRW)</th>
-                        <th>6%</th>
-                        <td colspan="2"><span id="salesCostKrw">0</span>원</td>
-                    </tr>
-                    <tr>
-                        <th colspan="2">총 이익비용(KRW)</th>
-                        <th colspan="2"><span id="totalProfitKrw">0</span>원</th>
-                    </tr>
-                    <tr>
-                        <th colspan="2">총 손익비용(KRW)</th>
-                        <th colspan="2"><span id="profitKrw">0</span>원</th>
-                    </tr>
+                        <tr>
+                            <th>구분</th>
+                            <th>내용</th>
+                            <th>GST</th>
+                            <th>GMT</th>
+                        </tr>
+                        <tr>
+                            <th>5레벨링 비용</th>
+                            <td><input type="checkbox" id="isLvlUp" checked="" onclick="MintRatioCalculator()"><label for="isLvlUp">적용여부</label></td>
+                            <td><span id="lvlUpGst">20</span></td>
+                            <td><span id="lvlUpGmt">10</span></td>
+                        </tr>
+                        <tr>
+                            <th rowspan="2">1회 민팅비용</th>
+                        </tr>
+                        <tr id="sneakers1">
+                            <td>
+                                <select id="isCommonUncommon" class="selectType" onchange="MintRatioCalculator()">
+                                    <option value="common">커먼&커먼</option>
+                                    <option value="uncommon">언커먼&언커먼</option>
+                                </select>
+                                <select id="firstMintCount" onchange="MintRatioCalculator()">
+                                    <option value="0">0</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                    <option value="6">6</option>
+                                </select>
+                                <select id="secondMintCount" onchange="MintRatioCalculator()">
+                                    <option value="0">0</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                    <option value="6">6</option>
+                                </select>
+                            </td>
+                            <td>
+                                <span id="gstMint">-</span>
+                            </td>
+                            <td>
+                                <span id="gmtMint">-</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th colspan="2">총 민팅 지출비용</th>
+                            <td><span id="totalCostGst">0</span></td>
+                            <td><span id="totalCostGmt">0</span></td>
+                        </tr>
+                        <tr class="totalMintCostKrw">
+                            <th colspan="2">총 민팅 지출비용(KRW)</th>
+                            <th colspan="2"><span id="totalMintCostKrw">0</span>원</th>
+                        </tr>
+                        <tr>
+                            <th colspan="2">신발 바닥가(SOL or BNB)</th>
+                            <td colspan="2">
+                                <input type="number" id="floorPrice" value="3" step="0.1" oninput="MintRatioCalculator()"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>판매 수수료(KRW)</th>
+                            <th>6%</th>
+                            <td colspan="2"><span id="salesCostKrw">0</span>원</td>
+                        </tr>
+                        <tr class="totalProfitKrw">
+                            <th colspan="2">총 이익비용(KRW)</th>
+                            <th colspan="2"><span id="totalProfitKrw">0</span>원</th>
+                        </tr>
+                        <tr class="profitKrw">
+                            <th colspan="2">총 손익비용(KRW)</th>
+                            <th colspan="2"><span id="profitKrw">0</span>원</th>
+                        </tr>
                     </tbody>
                 </table>
             </div>

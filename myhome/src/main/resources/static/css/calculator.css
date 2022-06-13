@@ -8,7 +8,6 @@ body{
 }
 .flexbox{
     display: flex;
-    flex-wrap: wrap;
     gap: 1em;
     flex-direction: column;
     align-items: center;
@@ -36,4 +35,13 @@ td{
     background-color: lightgrey;
     border: 1px solid #444444;
     padding: 10px;
+}
+.totalMintCostKrw th:nth-child(2) {
+    background-color: red !important;
+}
+.totalProfitKrw th:nth-child(2) {
+    background-color: green !important;
+}
+.profitKrw th:nth-child(2) {
+    background-color: yellow !important;
 }
